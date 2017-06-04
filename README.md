@@ -1,16 +1,18 @@
 BetterTextInputLayout
 =====================
-`BetterTextInputLayout` is Android support library's `TextInputLayout` subclass
-providing following extensions:
+ `BetterTextInputLayout` is Android support library's `TextInputLayout` subclass
+ providing following extensions:
 
- * exposes methods to show and hide passwords from code
- * `passwordToggleEnabled` is enabled by default
+ * adds methods to manipulate password visibility from code
+ * comes with `passwordToggleEnabled` enabled by default
 
 Methods
 =======
  * `showPassword()`
  * `hidePassword()`
+ * `togglePassword()`
 
+ See demo app for usage example.
 
 Installation
 ============
@@ -31,10 +33,6 @@ Installation
  For recent value of `<VERSION>` consult [library releases](https://github.com/MarcinOrlowski/bettertextinputlayout/releases)
  or jitpack badge: [![Release](https://jitpack.io/v/MarcinOrlowski/bettertextinputlayout.svg)](https://jitpack.io/#MarcinOrlowski/bettertextinputlayout)
 
-
-Bugs
-====
- * calling `showPassword()` and `hidePassword()` does not affect state of the toggle button.
 
 Author
 ======
