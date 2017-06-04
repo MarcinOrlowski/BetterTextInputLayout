@@ -1,16 +1,23 @@
 package com.marcinorlowski.bettertextinputlayout;
 
+/**
+ * BetterTextInputLayout Widget
+ *
+ * BetterTextInputLayout is subclass of TextInputLayout that adds public methods to manipulate
+ * password visibility of underlying EditText directly from code
+ *
+ * Marcin Orlowski <mail{#}marcinorlowski.com>
+ */
+
 import android.content.Context;
+import android.support.design.widget.CheckableImageButton;
 import android.support.v7.widget.TintTypedArray;
 import android.text.method.PasswordTransformationMethod;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.widget.EditText;
 
-/**
- *  BetterTextInputLayout is subclass to TextInputLayout that exposes showPassword()/hidePassword()
- *  methods allowing to show/hide password from code.
- */
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 public class BetterTextInputLayout extends android.support.design.widget.TextInputLayout {
 
@@ -44,14 +51,48 @@ public class BetterTextInputLayout extends android.support.design.widget.TextInp
 		if (et != null) {
 			if (et.getTransformationMethod() instanceof PasswordTransformationMethod) {
 				et.setTransformationMethod(null);
+				setToggleState(true);
 			}
 		}
 	}
 
+	/**
+	 * Masks EditText content (if it was visible)
+	 */
 	public void hidePassword() {
 		EditText et = getEditText();
 		if (et != null) {
 			et.setTransformationMethod(new PasswordTransformationMethod());
+			setToggleState(false);
+		}
+	}
+
+	/**
+	 * Toggles visibility of EditText content
+	 */
+	public void togglePassword() {
+		try {
+			Method m = this.getClass().getSuperclass().getDeclaredMethod("passwordVisibilityToggleRequested");
+			m.setAccessible(true);
+			m.invoke(this);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Updated the state of password visibility toggle
+	 *
+	 * @param passwordVisible
+	 */
+	protected void setToggleState(boolean passwordVisible) {
+		try {
+			Field f = this.getClass().getSuperclass().getDeclaredField("mPasswordToggleView");
+			f.setAccessible(true);
+			CheckableImageButton b = (CheckableImageButton)f.get(this);
+			b.setChecked(passwordVisible);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 

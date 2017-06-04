@@ -32,14 +32,21 @@
 
         <Button
             android:id="@+id/show"
-            android:text="Show password"
+            android:text="Show"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
         <Button
             android:id="@+id/hide"
-            android:text="Hide password"
+            android:text="Hide"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/toggle"
+            android:text="Toggle"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>

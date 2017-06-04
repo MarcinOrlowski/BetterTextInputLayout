@@ -1,5 +1,14 @@
 package com.marcinorlowski.bettertextinputlayout.demo;
 
+/**
+ * BetterTextInputLayout Demo app
+ *
+ * BetterTextInputLayout is subclass of TextInputLayout that adds public methods to manipulate
+ * password visibility of underlying EditText directly from code
+ *
+ * Marcin Orlowski <mail{#}marcinorlowski.com>
+ */
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
 		findViewById(R.id.show).setOnClickListener(clickListener);
 		findViewById(R.id.hide).setOnClickListener(clickListener);
+		findViewById(R.id.toggle).setOnClickListener(clickListener);
 	}
 
 	protected View.OnClickListener clickListener = new View.OnClickListener() {
@@ -28,6 +38,10 @@ public class MainActivity extends AppCompatActivity {
 
 				case R.id.hide:
 					((BetterTextInputLayout)findViewById(R.id.til)).hidePassword();
+					break;
+
+				case R.id.toggle:
+					((BetterTextInputLayout)findViewById(R.id.til)).togglePassword();
 					break;
 			}
 		}
