@@ -5,14 +5,14 @@ apply plugin: 'com.github.dcendents.android-maven'
 group='com.github.MarcinOrlowski'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    compileSdkVersion 28
+    buildToolsVersion "28.0.3"
 
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 25
-        versionCode 1
-        versionName "1.0.0"
+        targetSdkVersion 28
+        versionCode 20180218
+        versionName "2.0.0"
     }
     buildTypes {
         release {
@@ -20,10 +20,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    lintOptions {
+        disable 'RestrictedApi'
+    }
 }
 
 dependencies {
-    ext.supportLibsVersion = "25.3.1"
-    implementation "com.android.support:appcompat-v7:$supportLibsVersion"
-    implementation "com.android.support:design:$supportLibsVersion"
+    implementation "androidx.appcompat:appcompat:1.0.0"
+    implementation "com.google.android.material:material:1.0.0-rc01"
 }
