@@ -9,12 +9,12 @@ package com.marcinorlowski.bettertextinputlayout.demo;
  * Marcin Orlowski <mail{#}marcinorlowski.com>
  */
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
 import com.marcinorlowski.bettertextinputlayout.BetterTextInputLayout;
-import com.marcinorlowski.bettertextinputlayout.demo.R;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
 		public void onClick(View v) {
 			switch (v.getId()) {
 				case R.id.show:
+					View til = findViewById(R.id.til);
 					((BetterTextInputLayout)findViewById(R.id.til)).showPassword();
 					break;
 

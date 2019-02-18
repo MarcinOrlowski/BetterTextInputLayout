@@ -1,10 +1,10 @@
 BetterTextInputLayout
 =====================
- `BetterTextInputLayout` is Android support library's `TextInputLayout` subclass
+ `BetterTextInputLayout` is Android's Jetpack library's `TextInputLayout` subclass
  providing following extensions:
 
- * adds methods to manipulate password visibility from code
- * comes with `passwordToggleEnabled` enabled by default
+ * adds methods to manipulate password visibility from code,
+ * comes with `passwordToggleEnabled` enabled by default.
 
 Methods
 =======
@@ -12,7 +12,7 @@ Methods
  * `hidePassword()`
  * `togglePassword()`
 
- See demo app for usage example.
+ Names should be pretty self-explanatory :) See demo app for usage example though.
 
 Installation
 ============
@@ -36,5 +36,5 @@ Installation
 
 Author
 ======
- * Marcin Orlowski <mail(#)marcinorlowski.com>
+ * Marcin Orlowski <mail(#)marcinOrlowski.com>
 

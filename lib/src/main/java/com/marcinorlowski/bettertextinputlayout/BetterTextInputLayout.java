@@ -2,24 +2,27 @@ package com.marcinorlowski.bettertextinputlayout;
 
 /**
  * BetterTextInputLayout Widget
- *
+ * <p>
  * BetterTextInputLayout is subclass of TextInputLayout that adds public methods to manipulate
  * password visibility of underlying EditText directly from code
- *
+ * <p>
  * Marcin Orlowski <mail{#}marcinorlowski.com>
  */
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.support.design.widget.CheckableImageButton;
-import android.support.v7.widget.TintTypedArray;
 import android.text.method.PasswordTransformationMethod;
 import android.util.AttributeSet;
 import android.widget.EditText;
 
-import java.lang.reflect.Field;
+import com.google.android.material.textfield.TextInputLayout;
+
 import java.lang.reflect.Method;
 
-public class BetterTextInputLayout extends android.support.design.widget.TextInputLayout {
+import androidx.appcompat.widget.TintTypedArray;
+
+@SuppressLint ("RestrictedApi")
+public class BetterTextInputLayout extends TextInputLayout {
 
 	public BetterTextInputLayout(Context context) {
 		super(context, null);
@@ -30,8 +33,7 @@ public class BetterTextInputLayout extends android.support.design.widget.TextInp
 	}
 
 	public BetterTextInputLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-		// Can't call through to super(Context, AttributeSet, int) since it doesn't exist on API 10
-		super(context, attrs);
+		super(context, attrs, defStyleAttr);
 
 		final TintTypedArray a = TintTypedArray.obtainStyledAttributes(context, attrs,
 				R.styleable.TextInputLayout, defStyleAttr, R.style.Widget_Design_TextInputLayout);
@@ -41,29 +43,26 @@ public class BetterTextInputLayout extends android.support.design.widget.TextInp
 		a.recycle();
 	}
 
-
 	/**
 	 * Unveils password in underlying EditText (if it was hidden)
 	 */
 	public void showPassword() {
 		EditText et = getEditText();
-
-		if (et != null) {
-			if (et.getTransformationMethod() instanceof PasswordTransformationMethod) {
-				et.setTransformationMethod(null);
-				setToggleState(true);
-			}
+		if ((et != null) && (callHasPasswordTransformation())) {
+			et.setTransformationMethod(PasswordTransformationMethod.getInstance());
+			passwordVisibilityToggleRequested(true);
 		}
 	}
+
 
 	/**
 	 * Masks EditText content (if it was visible)
 	 */
 	public void hidePassword() {
 		EditText et = getEditText();
-		if (et != null) {
-			et.setTransformationMethod(new PasswordTransformationMethod());
-			setToggleState(false);
+		if ((et != null) && (!callHasPasswordTransformation())) {
+			et.setTransformationMethod(null);
+			passwordVisibilityToggleRequested(true);
 		}
 	}
 
@@ -71,29 +70,19 @@ public class BetterTextInputLayout extends android.support.design.widget.TextInp
 	 * Toggles visibility of EditText content
 	 */
 	public void togglePassword() {
+		passwordVisibilityToggleRequested(true);
+	}
+
+	public boolean callHasPasswordTransformation() {
+		boolean result = false;
 		try {
-			Method m = this.getClass().getSuperclass().getDeclaredMethod("passwordVisibilityToggleRequested");
+			Method m = getClass().getSuperclass().getDeclaredMethod("hasPasswordTransformation", new Class<?>[] {});
 			m.setAccessible(true);
-			m.invoke(this);
+			result = (boolean)m.invoke(this, (Object[])null);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
 
-	/**
-	 * Updated the state of password visibility toggle
-	 *
-	 * @param passwordVisible
-	 */
-	protected void setToggleState(boolean passwordVisible) {
-		try {
-			Field f = this.getClass().getSuperclass().getDeclaredField("mPasswordToggleView");
-			f.setAccessible(true);
-			CheckableImageButton b = (CheckableImageButton)f.get(this);
-			b.setChecked(passwordVisible);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		return result;
 	}
-
 }
